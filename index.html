@@ -1,0 +1,89 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<html>
+    <head>efg</head>
+    <body>
+        <h1>This is Sockets in Real Time </h1>
+        <hr />
+        <div id='chats'></div>
+    </body>
+</html>
+<script>
+    var ourchats = document.getElementById("chats");
+    var username = prompt("Enter Your Name");
+    var socket = io('http://192.168.137.1:80');
+    socket.on('ne', function (data) {
+    //   console.log(data);
+    console.log(data)
+        // data.forEach(element => {
+        //     ourchats.append(element)
+        // });
+        ourchats.innerHTML = "";
+         for(let a of data.chats){
+        ourchats.innerHTML += `<div id='chat1'>`+a.name+`</div>`;
+    }
+    //   socket.emit('logout', { my: 'Hello Dp' });
+    });
+    // for(let a of data){
+    //     console.log(a)
+    // }
+
+    // socket.on('ne', function (data) {
+    // //   console.log(data);
+    //     console.log(data)
+    //   // socket.emit('logout', { my: 'Hello Dp' });
+    // });
+
+
+    
+    function send(event){
+        // event.preventDefault();
+        var data = document.getElementById('me').value;
+    
+      console.log(data);
+      socket.emit('logout', { my: data,user:username});
+
+      document.getElementById("me").value = "";
+
+      socket.on('chats',(sdata)=>{
+          console.log(sdata)
+      })
+    }
+
+
+  
+  </script>
+<form onsubmit="send(event)">
+    <input type="text" placeholder='Lets play some game' id='me' >
+<br /><button type="submit">Send</button>
+</form>
+<style>
+    #chat1{
+        width:100%;
+        font-size: 60px;
+        border:1px solid black;
+        padding:30px;
+    }
+    input,button,h1{
+        padding: 30px;
+        font-size: 60px;
+        width: 90%;
+        margin:20px;
+        border:5px solid black;
+    }
+    button:active{
+        background: black;
+        color:white;
+    }
+    form{
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+    }
+</style>
+
+<script>
+      for(var i = 0;i<1100; i++){
+        console.log("Pushing " + i);
+        send()
+    }
+</script>
