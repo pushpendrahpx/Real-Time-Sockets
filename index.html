@@ -1,60 +1,81 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
 <html>
-    <head>efg</head>
+    <head></head>
     <body>
-        <h1>This is Sockets in Real Time </h1>
+        <!-- <h1>My Real Time Search</h1> -->
         <hr />
+        <small>We are showing Top 20 Results from Comments </small><hr />
         <div id='chats'></div>
+        <br /><br /><br />
+        <br /><br /><br />
+        <br /><br /><br />
     </body>
 </html>
 <script>
-    var ourchats = document.getElementById("chats");
-    var username = prompt("Enter Your Name");
-    var socket = io('http://192.168.137.1:80');
-    socket.on('ne', function (data) {
-    //   console.log(data);
-    console.log(data)
-        // data.forEach(element => {
-        //     ourchats.append(element)
-        // });
-        ourchats.innerHTML = "";
-         for(let a of data.chats){
-        ourchats.innerHTML += `<div id='chat1'>`+a.name+`</div>`;
-    }
-    //   socket.emit('logout', { my: 'Hello Dp' });
-    });
-    // for(let a of data){
-    //     console.log(a)
-    // }
 
+    run = async (val)=>{
+        console.log(val)
+        
+        // let x = prompt("Enter Term to Search");
+        console.log("Fired for Data" + val)
+        let response = await fetch('http://a7a1c1f0.ngrok.io/search/'+val);
+        let data = await response.json(response)
+        console.log("We Got the Data")
+        console.log(data);
+
+        let x  = document.getElementById("chats");
+        x.innerHTML = '';
+        for(let each of data){
+            x.innerHTML += each.name+"<br /><br />";
+        }
+
+
+    }
+    // var ourchats = document.getElementById("chats");
+    // var socket = io('http://7487b614.ngrok.io:80');
     // socket.on('ne', function (data) {
     // //   console.log(data);
-    //     console.log(data)
-    //   // socket.emit('logout', { my: 'Hello Dp' });
+    // console.log(data)
+    //     // data.forEach(element => {
+    //     //     ourchats.append(element)
+    //     // });drf
+    //     ourchats.innerHTML = "";
+    //      for(let a of data.chats){
+    //     ourchats.innerHTML += `<div id='chat1'>`+a.name+`</div>`;
+    // }
+    // //   socket.emit('logout', { my: 'Hello Dp' });
     // });
+    // // for(let a of data){
+    // //     console.log(a)
+    // // }
+
+    // // socket.on('ne', function (data) {
+    // // //   console.log(data);
+    // //     console.log(data)
+    // //   // socket.emit('logout', { my: 'Hello Dp' });
+    // // });
 
 
     
-    function send(event){
-        // event.preventDefault();
-        var data = document.getElementById('me').value;
+    // function send(event){
+    //     event.preventDefault();
+    //     var data = document.getElementById('me').value;
     
-      console.log(data);
-      socket.emit('logout', { my: data,user:username});
+    //   console.log(data);
+    //   socket.emit('logout', { my: data,user:'username'});
 
-      document.getElementById("me").value = "";
+    //   document.getElementById("me").value = "";
 
-      socket.on('chats',(sdata)=>{
-          console.log(sdata)
-      })
-    }
+    //   socket.on('chats',(sdata)=>{
+    //       console.log(sdata)
+    //   })
+    // }
 
 
   
   </script>
 <form onsubmit="send(event)">
-    <input type="text" placeholder='Lets play some game' id='me' >
-<br /><button type="submit">Send</button>
+    <input type="text" placeholder='Lets have some Chats !' id='me' onkeyup="run(value)"  />
 </form>
 <style>
     #chat1{
@@ -80,10 +101,42 @@
         bottom: 0px;
     }
 </style>
+<!-- <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
 
 <script>
-      for(var i = 0;i<1100; i++){
-        console.log("Pushing " + i);
-        send()
-    }
-</script>
+      // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAmhhlxnqvpGjLVhNtUlRb9sVxG-bYBZX0",
+    authDomain: "chatapp-cb43e.firebaseapp.com",
+    databaseURL: "https://chatapp-cb43e.firebaseio.com",
+    projectId: "chatapp-cb43e",
+    storageBucket: "chatapp-cb43e.appspot.com",
+    messagingSenderId: "551185642506",
+    appId: "1:551185642506:web:5ec58f5c4819c5d6fd1bf3",
+    measurementId: "G-FSKRRN5R3H"
+  };
+    // Initialize Cloud Firestore through Firebase
+firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
+
+
+// Add a second document with a generated ID.
+db.collection("comapany").add({
+    name: "Dominos"
+})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+
+db.collection("company").get().then(() => {
+    querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+    });
+});
+
+</script> -->
